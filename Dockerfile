@@ -28,9 +28,8 @@ WORKDIR /app
 
 # 빌드 이미지로부터 JAR 파일 복사
 COPY --from=build /workspace/app/build/libs/spring-docker.jar app.jar
+RUN chmod +x app.jar
 
-# 포트 노출
-EXPOSE 8080
-
-# 애플리케이션 실행
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+# 빌드 이미지로부터 wait-for-it.sh 파일 복사
+COPY ./script/wait-for-it.sh wait-for-it.sh
+RUN chmod +x wait-for-it.sh
