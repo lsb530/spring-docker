@@ -8,9 +8,11 @@ services:
       MYSQL_DATABASE: example_db
     ports:
       - "3306:3306"
+    volumes:
+      - ./script/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   app:
-    build: . # 현재 디렉토리에 있는 Dockerfile을 사용하여 빌드
+    build: .
     ports:
       - "8080:8080"
     depends_on:
