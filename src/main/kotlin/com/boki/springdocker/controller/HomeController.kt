@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController {
     @RequestMapping("/")
     fun sample(): String {
-        return "Home"
+        return "Docker Springboot Test"
     }
 }
