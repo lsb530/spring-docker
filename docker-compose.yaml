@@ -2,7 +2,7 @@ version: '3'
 services:
   mysql-container:
     image: mysql:latest
-    platform: linux/amd64
+    platform: linux/arm64
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: example_db
@@ -11,7 +11,7 @@ services:
     volumes:
       - ./script/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  app:
+  backend:
     build: .
     ports:
       - "8080:8080"
@@ -23,3 +23,12 @@ services:
       - |
         ./wait-for-it.sh mysql-container:3306 -s -t 0
         java -jar app.jar
+
+  frontend:
+    build: .
+    image: nginx:latest
+    ports:
+      - "3000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist:/usr/share/nginx/html  # 이 부분은 React 프로젝트의 빌드 결과 디렉터리가 들어가야 합니다.

@@ -1,6 +1,6 @@
 ## 빌드
 # 베이스 이미지 설정
-FROM amazoncorretto:17 AS build
+FROM amazoncorretto:17 AS backend-build
 
 # 작업 디렉터리 설정
 WORKDIR /workspace/app
@@ -13,6 +13,19 @@ RUN chmod +x ./gradlew
 
 # Spring Boot 빌드 (Kotlin)
 RUN ./gradlew clean bootJar
+
+# Frontend build stage
+FROM node:latest AS frontend-build
+
+WORKDIR /workspace/app/frontend
+
+COPY frontend/package.json frontend/yarn.lock ./
+
+RUN yarn install
+
+COPY frontend/ ./
+
+RUN yarn build
 
 ### Mysql Server
 ## 베이스 이미지 설정
@@ -40,8 +53,10 @@ LABEL authors="boki"
 WORKDIR /app
 
 # 빌드 이미지로부터 JAR 파일 복사
-COPY --from=build /workspace/app/build/libs/spring-docker.jar app.jar
+COPY --from=backend-build /workspace/app/build/libs/spring-docker.jar app.jar
 RUN chmod +x app.jar
+
+COPY --from=frontend-build /workspace/app/frontend/dist /app/frontend/dist
 
 # 빌드 이미지로부터 wait-for-it.sh 파일 복사
 COPY ./script/wait-for-it.sh wait-for-it.sh
