@@ -14,8 +14,21 @@ RUN chmod +x ./gradlew
 # Spring Boot 빌드 (Kotlin)
 RUN ./gradlew clean bootJar
 
-## 실행
-LABEL authors="boki"
+### Mysql Server
+## 베이스 이미지 설정
+#FROM mysql:latest
+#
+## 라벨링
+#LABEL authors="boki"
+#
+## SQL 초기화 파일 복사
+#ADD ./script/init.sql /docker-entrypoint-initdb.d
+#
+## 포트 노출 ==> docker-compose.yaml로 대체 가능
+#EXPOSE 3306
+#
+## MySQL 서버 실행
+#CMD ["mysqld"]
 
 # 런타임 이미지 준비
 FROM amazoncorretto:17
@@ -33,3 +46,9 @@ RUN chmod +x app.jar
 # 빌드 이미지로부터 wait-for-it.sh 파일 복사
 COPY ./script/wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
+
+# 포트 노출 ==> docker-compose.yaml로 대체 가능
+#EXPOSE 8080
+
+# 애플리케이션 실행
+#ENTRYPOINT ["java","-jar","/app/app.jar"]
