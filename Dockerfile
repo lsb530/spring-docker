@@ -1,3 +1,16 @@
+# Frontend build stage
+FROM node:latest AS frontend-build
+
+WORKDIR /workspace/app/frontend
+
+COPY frontend/package*.json ./
+
+RUN yarn install
+
+COPY frontend/ .
+
+RUN yarn build
+
 ## 빌드
 # 베이스 이미지 설정
 FROM amazoncorretto:17 AS backend-build
@@ -13,19 +26,6 @@ RUN chmod +x ./gradlew
 
 # Spring Boot 빌드 (Kotlin)
 RUN ./gradlew clean bootJar
-
-# Frontend build stage
-FROM node:latest AS frontend-build
-
-WORKDIR /workspace/app/frontend
-
-COPY frontend/package.json frontend/yarn.lock ./
-
-RUN yarn install
-
-COPY frontend/ ./
-
-RUN yarn build
 
 ### Mysql Server
 ## 베이스 이미지 설정
@@ -43,6 +43,17 @@ RUN yarn build
 ## MySQL 서버 실행
 #CMD ["mysqld"]
 
+FROM nginx:alpine as production-stage
+
+WORKDIR /workspace/app/frontend
+
+COPY --from=frontend-build /workspace/app/frontend/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
 # 런타임 이미지 준비
 FROM amazoncorretto:17
 
@@ -55,8 +66,6 @@ WORKDIR /app
 # 빌드 이미지로부터 JAR 파일 복사
 COPY --from=backend-build /workspace/app/build/libs/spring-docker.jar app.jar
 RUN chmod +x app.jar
-
-COPY --from=frontend-build /workspace/app/frontend/dist /app/frontend/dist
 
 # 빌드 이미지로부터 wait-for-it.sh 파일 복사
 COPY ./script/wait-for-it.sh wait-for-it.sh
