@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+  frontend:
+    image: react-nginx-image:1.0.0
+    build:
+      context: .
+      dockerfile: Dockerfile-fe  # Dockerfile의 이름을 지정
+    ports:
+      - "7777:80"
+    container_name: react-vite-app  # 컨테이너 이름을 지정
