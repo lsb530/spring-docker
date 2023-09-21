@@ -1,3 +1,4 @@
+import org.gradle.internal.classpath.Instrumented.systemProperty
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -19,6 +20,8 @@ repositories {
     mavenCentral()
 }
 
+val activeProfile = System.getProperty("spring.profiles.active") as String?
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("com.mysql:mysql-connector-j")
@@ -26,6 +29,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 }
 
 tasks.withType<KotlinCompile> {
@@ -37,4 +41,13 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.register("customCleanBuild") {
+    doLast {
+        // 여기에 clean build를 수행하는 로직을 작성
+        exec {
+            commandLine("gradlew", "clean")
+        }
+    }
 }

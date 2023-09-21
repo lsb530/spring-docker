@@ -5,10 +5,11 @@ import './App.css'
 import axios from "axios";
 
 function App() {
-    axios.get('http://localhost:12345').then((res) => console.log(res.data))
+    axios.get('http://localhost:12345').then( async (res) => {
+        console.log(res.data)
+    })
     axios.get('http://localhost:12345/api/users').then((res) => console.log(res.data))
   const [count, setCount] = useState(0)
-
   return (
     <>
       <div>
@@ -19,7 +20,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + Reactsaa</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

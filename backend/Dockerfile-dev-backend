@@ -1,0 +1,14 @@
+# backend/Dockerfile-dev-backend
+FROM amazoncorretto:17 as dev-backend
+
+WORKDIR /workspace/app
+
+COPY . .
+
+RUN chmod +x ./gradlew
+
+COPY ./script/wait-for-it.sh wait-for-it.sh
+
+RUN chmod +x wait-for-it.sh
+
+#CMD ["./gradlew", "bootRun"]

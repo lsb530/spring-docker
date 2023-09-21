@@ -1,0 +1,11 @@
+# backend/Dockerfile-prod-backend
+FROM amazoncorretto:17 as build
+WORKDIR /workspace/app
+COPY . .
+RUN chmod +x ./gradlew
+RUN ./gradlew clean bootJar
+
+FROM amazoncorretto:17
+WORKDIR /workspace/app
+COPY --from=build /workspace/app/build/libs/backend.jar app.jar
+CMD ["java", "-jar", "app.jar"]

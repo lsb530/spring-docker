@@ -1,0 +1,10 @@
+# frontend/Dockerfile-dev-frontend
+FROM node:latest as dev-frontend
+
+WORKDIR /workspace/app
+
+COPY . .
+
+RUN yarn install
+
+#CMD ["yarn", "dev", "--host"]

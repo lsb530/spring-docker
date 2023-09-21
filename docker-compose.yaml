@@ -1,4 +1,5 @@
 version: '3'
+
 networks:
   app-network:
     driver: bridge
@@ -32,7 +33,7 @@ services:
     depends_on:
       - mysql-container
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_PROFILES_ACTIVE=dev
     command:
       - bash
       - -c
