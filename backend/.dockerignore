@@ -1,0 +1,25 @@
+#build
+build/
+target/
+
+#gradle cache dir
+.gradle/
+
+#git
+.git/
+
+#intelliJ
+.idea/
+*.iml
+
+#log
+logs/
+*.log
+
+#macOS
+.DS_Store
+
+#eclipse
+.classpath
+.project
+.settings/
