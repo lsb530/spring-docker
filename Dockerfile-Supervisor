@@ -29,7 +29,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar
 
 # SQL 초기화 파일 복사
-ADD ./script/init.sql /docker-entrypoint-initdb.d/
+ADD backend/script/init.sql /docker-entrypoint-initdb.d/
 
 # 포트 노출
 EXPOSE 3306 8080

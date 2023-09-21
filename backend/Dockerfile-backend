@@ -1,0 +1,42 @@
+## 빌드
+# 베이스 이미지 설정
+FROM amazoncorretto:17 AS backend-build
+
+# 작업 디렉터리 설정
+WORKDIR /workspace/app
+
+# 소스 코드 복사
+COPY . .
+
+# Gradle wrapper 실행 권한 설정 (Linux/Unix 환경에서 필요할 수 있음)
+RUN chmod +x ./gradlew
+
+# Spring Boot 빌드 (Kotlin)
+RUN ./gradlew clean bootJar
+
+# 런타임 이미지 준비
+FROM amazoncorretto:17
+
+# 라벨링
+LABEL authors="boki"
+
+# 작업 디렉터리 설정
+WORKDIR /workspace/app
+
+# 빌드 이미지로부터 JAR 파일 복사
+COPY --from=backend-build /workspace/app/build/libs/backend.jar app.jar
+RUN chmod +x app.jar
+
+# 빌드 이미지로부터 wait-for-it.sh 파일 복사
+COPY ./script/wait-for-it.sh wait-for-it.sh
+RUN chmod +x wait-for-it.sh
+
+# 메타데이터에 포트정보 추가 ==> docker-compose.yaml로 대체 가능
+# Dockerfile의 EXPOSE는 이미지 메타데이터에 포트 정보를 추가하는 것입니다. 실제로 포트를 열지는 않습니다.
+# docker-compose.yaml의 ports 설정은 실제로 호스트와 컨테이너 간의 포트를 연결합니다.
+# EXPOSE는 개발자나 사용자에게 컨테이너가 사용하는 포트에 대한 정보를 제공하는 것이 주 목적입니다.
+# 실제 운영 환경에서는 docker-compose.yaml의 ports 또는 docker run -p와 같은 명령어를 사용하여 포트를 열어야 합니다.
+#EXPOSE 8080
+
+# 애플리케이션 실행 ==> docker-compose.yaml로 대체 가능
+#ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "app.jar"]

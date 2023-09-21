@@ -68,7 +68,7 @@ COPY --from=backend-build /workspace/app/build/libs/spring-docker.jar app.jar
 RUN chmod +x app.jar
 
 # 빌드 이미지로부터 wait-for-it.sh 파일 복사
-COPY ./script/wait-for-it.sh wait-for-it.sh
+COPY backend/script/wait-for-it.sh wait-for-it.sh
 RUN chmod +x wait-for-it.sh
 
 # 포트 노출 ==> docker-compose.yaml로 대체 가능

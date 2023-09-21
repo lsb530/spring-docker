@@ -1,0 +1,28 @@
+# Frontend build stage
+FROM node:latest AS frontend-build
+
+WORKDIR /workspace/app
+
+COPY . .
+
+RUN yarn install
+
+RUN yarn build
+
+FROM nginx:alpine as production-stage
+
+WORKDIR /workspace/app
+
+COPY --from=frontend-build /workspace/app/dist /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# 메타데이터에 포트정보 추가 ==> docker-compose.yaml로 대체 가능
+# Dockerfile의 EXPOSE는 이미지 메타데이터에 포트 정보를 추가하는 것입니다. 실제로 포트를 열지는 않습니다.
+# docker-compose.yaml의 ports 설정은 실제로 호스트와 컨테이너 간의 포트를 연결합니다.
+# EXPOSE는 개발자나 사용자에게 컨테이너가 사용하는 포트에 대한 정보를 제공하는 것이 주 목적입니다.
+# 실제 운영 환경에서는 docker-compose.yaml의 ports 또는 docker run -p와 같은 명령어를 사용하여 포트를 열어야 합니다.
+#EXPOSE 80
+
+# 명령어 실행 ==> docker-compose.yaml로 대체 가능
+#CMD echo "Starting frontend container..." && nginx -g "daemon off;"

@@ -5,7 +5,8 @@ import './App.css'
 import axios from "axios";
 
 function App() {
-    axios.get('http://localhost:8080').then((res) => console.log(res.data))
+    axios.get('http://localhost:12345').then((res) => console.log(res.data))
+    axios.get('http://localhost:12345/api/users').then((res) => console.log(res.data))
   const [count, setCount] = useState(0)
 
   return (

@@ -1,0 +1,40 @@
+server:
+  port: 8080
+spring:
+  mvc:
+    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
+        default_batch_fetch_size: 100
+      show_sql: true
+      format_sql: true
+      highlight_sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      #      mode: always
+      mode: never
+  web:
+    resources:
+      add-mappings: false
+logging:
+  level:
+    root: info
+    com:
+      boki:
+        springdocker: debug
+#    p6spy: debug
+
+springdoc:
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
