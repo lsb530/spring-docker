@@ -20,6 +20,7 @@ services:
 #    command: /bin/sh -c "echo 'Starting database container...'"
 
   backend:
+    image: springboot-app:${TAG}
     networks:
       - app-network
     restart: unless-stopped
@@ -45,7 +46,7 @@ services:
     networks:
       - app-network
     restart: unless-stopped
-    image: react-vite-app
+    image: react-vite-app:${TAG}
     build:
       context: ./frontend
       dockerfile: Dockerfile-frontend
