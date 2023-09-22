@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class HomeController {
-    @GetMapping("/")
+    @GetMapping("/api")
     fun home(): String {
         return "Boki's Docker Springboot adf Test!!!"
+    }
+
+    @GetMapping("/cors")
+    fun home2(): String {
+        return "CORS Test"
     }
 }

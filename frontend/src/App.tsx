@@ -9,15 +9,20 @@ function App() {
     const [apiResult, setApiResult] = useState('');
     // 컴포넌트가 마운트 될 때 API를 호출합니다.
     useEffect(() => {
-        // 첫 번째 API 호출
-        axios.get('http://localhost:8080')
+        // API 호출
+        axios.get('http://localhost:8080/api')
             .then((res) => {
                 console.log(res.data);
                 setApiResult(res.data); // API 결과를 state에 저장합니다.
             })
             .catch(err => console.error(err)); // 에러 핸들링
 
-        // 두 번째 API 호출
+      axios.get('http://localhost:8080/cors')
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch(err => console.error(err)); // 에러 핸들링
+        // API 호출
         axios.get('http://localhost:8080/api/users')
             .then((res) => console.log(res.data))
             .catch(err => console.error(err)); // 에러 핸들링
