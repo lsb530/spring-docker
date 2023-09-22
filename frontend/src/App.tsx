@@ -1,16 +1,28 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import axios from "axios";
 
 function App() {
-    axios.get('http://localhost:12345').then( async (res) => {
-        console.log(res.data)
-    })
-    axios.get('http://localhost:12345/api/users').then((res) => console.log(res.data))
   const [count, setCount] = useState(0)
-  return (
+    const [apiResult, setApiResult] = useState('');
+    // 컴포넌트가 마운트 될 때 API를 호출합니다.
+    useEffect(() => {
+        // 첫 번째 API 호출
+        axios.get('http://localhost:8080')
+            .then((res) => {
+                console.log(res.data);
+                setApiResult(res.data); // API 결과를 state에 저장합니다.
+            })
+            .catch(err => console.error(err)); // 에러 핸들링
+
+        // 두 번째 API 호출
+        axios.get('http://localhost:8080/api/users')
+            .then((res) => console.log(res.data))
+            .catch(err => console.error(err)); // 에러 핸들링
+    }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
+    return (
     <>
       <div>
         <a href="https://vitejs.dev" target="_blank">
@@ -20,7 +32,10 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + Reactsaa</h1>
+      <div>
+        Api Result(GET /): <u style={{color: 'greenyellow'}}>{apiResult}</u>
+      </div>
+      <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

@@ -11,4 +11,6 @@ COPY ./script/wait-for-it.sh wait-for-it.sh
 
 RUN chmod +x wait-for-it.sh
 
+#ENV JAVA_TOOL_OPTIONS="-agentlib:jdwp=transport=dt_socket,address=*:9090,server=y,suspend=n"
+
 #CMD ["./gradlew", "bootRun"]

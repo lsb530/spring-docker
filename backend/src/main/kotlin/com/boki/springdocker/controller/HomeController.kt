@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController {
     @GetMapping("/")
     fun home(): String {
-        return "KK's Docker Springboot adf Test!!!"
+        return "Boki's Docker Springboot adf Test!!!"
     }
-
-//    @GetMapping("/test")
-//    fun test(): String {
-//        return "Test!!!"
-//    }
 }
