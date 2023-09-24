@@ -8,25 +8,32 @@ function App() {
   const [count, setCount] = useState(0)
     const [apiResult, setApiResult] = useState('');
     // 컴포넌트가 마운트 될 때 API를 호출합니다.
-    useEffect(() => {
-        // API 호출
-        axios.get('http://localhost:8080/api')
-            .then((res) => {
-                console.log(res.data);
-                setApiResult(res.data); // API 결과를 state에 저장합니다.
-            })
-            .catch(err => console.error(err)); // 에러 핸들링
+  useEffect(() => {
+    // API 호출
+    axios.get('http://localhost:8080/api')
+        .then((res) => {
+          console.log(res.data);
+          setApiResult(res.data); // API 결과를 state에 저장합니다.
+        })
+        .catch(err => console.error(err)); // 에러 핸들링
+  }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
 
-      axios.get('http://localhost:8080/cors')
-          .then((res) => {
-            console.log(res.data);
-          })
-          .catch(err => console.error(err)); // 에러 핸들링
-        // API 호출
-        axios.get('http://localhost:8080/api/users')
-            .then((res) => console.log(res.data))
-            .catch(err => console.error(err)); // 에러 핸들링
-    }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
+  useEffect(() => {
+    // API 호출
+    axios.get('http://localhost:8080/cors')
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch(err => console.error(err)); // 에러 핸들링
+  }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
+
+  useEffect(() => {
+    // API 호출
+    axios.get('http://localhost:8080/api/users')
+        .then((res) => console.log(res.data))
+        .catch(err => console.error(err)); // 에러 핸들링
+  }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
+
     return (
     <>
       <div>
