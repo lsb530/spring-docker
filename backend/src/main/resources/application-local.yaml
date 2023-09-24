@@ -3,11 +3,10 @@ spring:
     restart:
       enabled: true
       additional-paths: .
+#      additional-paths: ./src/main
 #      exclude: static/**,public/**
-#      poll-interval: 3s
-#      quiet-period: 2s
-#    livereload:
-#      enabled: true
+    livereload:
+      enabled: true
   datasource:
     url: jdbc:mysql://localhost:3306/example_db?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root

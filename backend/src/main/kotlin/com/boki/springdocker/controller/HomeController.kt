@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 class HomeController {
     @GetMapping("/api")
     fun home(): String {
-        return "Boki's Docker Springboot adf Test!!!"
+        return "Boki's Docker Springboot adf Testing!!!"
     }
 
     @GetMapping("/cors")

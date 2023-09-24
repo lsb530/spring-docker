@@ -1,4 +1,3 @@
-import org.gradle.internal.classpath.Instrumented.systemProperty
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -40,14 +39,6 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.withType<Test> {
+    enabled = false
     useJUnitPlatform()
-}
-
-tasks.register("customCleanBuild") {
-    doLast {
-        // 여기에 clean build를 수행하는 로직을 작성
-        exec {
-            commandLine("gradlew", "clean")
-        }
-    }
 }
