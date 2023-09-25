@@ -25,7 +25,7 @@ services:
     image: springboot-app:latest
     build:
       context: ./backend
-      dockerfile: Dockerfile-dev-backend
+      dockerfile: Dockerfile-prod-backend
     ports:
       - "9090:9090" # Remote 디버그 포트 포워딩
       - "8080:8080" # 웹 애플리케이션 포트 포워딩
@@ -48,7 +48,7 @@ services:
     image: react-vite-app:latest
     build:
       context: ./frontend
-      dockerfile: Dockerfile-dev-frontend
+      dockerfile: Dockerfile-prod-frontend
     volumes:
       - ./frontend/src:/workspace/app/src
     ports:

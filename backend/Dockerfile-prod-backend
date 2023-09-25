@@ -1,11 +1,32 @@
-# backend/Dockerfile-prod-backend
-FROM amazoncorretto:17 as build
+## 빌드
+# 베이스 이미지 설정
+FROM amazoncorretto:17 AS backend-build
+
+# 작업 디렉터리 설정
 WORKDIR /workspace/app
+
+# 소스 코드 복사
 COPY . .
+
+# Gradle wrapper 실행 권한 설정 (Linux/Unix 환경에서 필요할 수 있음)
 RUN chmod +x ./gradlew
+
+# Spring Boot 빌드 (Kotlin)
 RUN ./gradlew clean bootJar
 
+# 런타임 이미지 준비
 FROM amazoncorretto:17
+
+# 라벨링
+LABEL authors="boki"
+
+# 작업 디렉터리 설정
 WORKDIR /workspace/app
-COPY --from=build /workspace/app/build/libs/backend.jar app.jar
-CMD ["java", "-jar", "app.jar"]
+
+# 빌드 이미지로부터 JAR 파일 복사
+COPY --from=backend-build /workspace/app/build/libs/backend.jar app.jar
+RUN chmod +x app.jar
+
+# 빌드 이미지로부터 wait-for-it.sh 파일 복사
+COPY ./script/wait-for-it.sh wait-for-it.sh
+RUN chmod +x wait-for-it.sh
