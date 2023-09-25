@@ -27,6 +27,16 @@ function App() {
           console.log(res.data);
         })
         .catch(err => console.error(err)); // 에러 핸들링
+  }, []);
+
+  useEffect(() => {
+    // API 호출
+    // axios.get('http://localhost:8080/cors')
+    axios.get('http://backend:8080/test') // => CORS 호출이 일어나서 막히길 기대. But Http Status: 200, App.tsx 로 리다이렉트됨
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch(err => console.error(err)); // 에러 핸들링
   }, []); // 빈 배열을 dependency로 전달하여 한 번만 실행하게 합니다.
 
   useEffect(() => {
