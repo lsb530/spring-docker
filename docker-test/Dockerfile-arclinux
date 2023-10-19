@@ -1,0 +1,9 @@
+FROM archlinux:latest
+
+# 패키지 관리자: pacman
+# 무한히 실행 상태로 유지하게 하는 명령어: tail -f /dev/null
+
+# 원하는 정보만 추출하여 출력
+CMD echo "[OS Information]: $(cat /etc/os-release | grep 'PRETTY_NAME' | cut -d '=' -f 2) /" \
+    "[Package Manager(pacman)]: $(pacman --version | grep 'Pacman v' | sed 's/^.*Pacman/Pacman/')" && \
+    tail -f /dev/null

@@ -5,6 +5,5 @@ FROM busybox:latest
 # 무한히 실행 상태로 유지하게 하는 명령어: tail -f /dev/null
 
 # 원하는 정보만 추출하여 출력
-CMD echo "[OS Information]: $(busybox | head -n 1)" && \
-    "[Package Manager]: X" && \
+CMD echo "[OS Information]: $(busybox | head -n 1) / [Package Manager]: X" && \
     tail -f /dev/null

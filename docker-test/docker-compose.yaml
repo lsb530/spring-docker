@@ -19,6 +19,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-amazonlinux
+  arclinux:
+    image: boki-test-arclinux_image
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile-arclinux
   busybox:
 #    depends_on:
 #      - amazonlinux
