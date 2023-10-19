@@ -1,0 +1,63 @@
+version: '3'
+services:
+  alpine:
+    image: boki-test-alpine_image
+    build:
+      context: .
+      dockerfile: Dockerfile-alpine
+  oraclelinux:
+#    depends_on:
+#      - alpine
+    image: boki-test-oraclelinux_image
+    build:
+      context: .
+      dockerfile: Dockerfile-oraclelinux
+  amazonlinux:
+#    depends_on:
+#      - oraclelinux
+    image: boki-test-amazonlinux_image
+    build:
+      context: .
+      dockerfile: Dockerfile-amazonlinux
+  busybox:
+#    depends_on:
+#      - amazonlinux
+    image: boki-test-busybox_image
+    build:
+      context: .
+      dockerfile: Dockerfile-busybox
+  centos:
+#    depends_on:
+#      - busybox
+    image: boki-test-centos_image
+    build:
+      context: .
+      dockerfile: Dockerfile-centos
+  debian:
+#    depends_on:
+#      - centos
+    image: boki-test-debian_image
+    build:
+      context: .
+      dockerfile: Dockerfile-debian
+  fedora:
+#    depends_on:
+#      - debian
+    image: boki-test-fedora_image
+    build:
+      context: .
+      dockerfile: Dockerfile-fedora
+  opensuse:
+#    depends_on:
+#      - fedora
+    image: boki-test-opensuse_image
+    build:
+      context: .
+      dockerfile: Dockerfile-opensuse
+  ubuntu:
+#    depends_on:
+#      - opensuse
+    image: boki-test-ubuntu_image
+    build:
+      context: .
+      dockerfile: Dockerfile-ubuntu

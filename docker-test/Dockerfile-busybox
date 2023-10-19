@@ -1,0 +1,10 @@
+# 매우 경량화된 리눅스 배포판
+FROM busybox:latest
+
+# 패키지 관리자: X
+# 무한히 실행 상태로 유지하게 하는 명령어: tail -f /dev/null
+
+# 원하는 정보만 추출하여 출력
+CMD echo "[OS Information]: $(busybox | head -n 1)" && \
+    "[Package Manager]: X" && \
+    tail -f /dev/null

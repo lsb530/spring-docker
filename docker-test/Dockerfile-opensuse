@@ -1,0 +1,9 @@
+FROM opensuse/leap:latest
+
+# 패키지 관리자: zypper, rpm
+# 무한히 실행 상태로 유지하게 하는 명령어
+
+# 원하는 정보만 추출하여 출력
+CMD echo "[OS Information]: $(cat /etc/os-release | grep 'PRETTY_NAME' | cut -d '=' -f 2) /" \
+    "[Package Manager(zypper, rpm)]: $(zypper --version | head -n 1), $(rpm --version | head -n 1)" && \
+    tail -f /dev/null
